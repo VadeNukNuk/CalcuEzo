@@ -110,14 +110,28 @@ public class Calculatrice {
 			// seul le cas d'un calcul, ou d'une parenthèse, qui
 			// commence par un entier négatif demande un traitement
 			// spécifique pour la solution que j'ai adopté
-			if ((npr.isEmpty() && operationStack.isEmpty() && current.equalsIgnoreCase("-"))
-					|| ( !operationStack.isEmpty() && L_BRACKETS.contains(operationStack.peekLast()) && current.equalsIgnoreCase("-")
-							)
-					) {
+			if (npr.isEmpty() && operationStack.isEmpty() && current.equalsIgnoreCase("-")) {
 				npr.add("0");
 				npr.add(pExpression.pop());
 				npr.add(current);
 				current = pExpression.pop();
+			}
+
+			// si le token est une parenthèse ouvrante
+			if (L_BRACKETS.contains(current)) {
+				// on la met sur le stack d'opérations
+				operationStack.push(current);
+
+				// on vérifie si un entier négatif suivra
+				if (pExpression.peek().contains("-")) {
+					// sortir son "opérateur"
+					String negatif = pExpression.pop();
+					// gestion comme hors parenthèses
+					npr.add("0");
+					npr.add(pExpression.pop());
+					npr.add(negatif);
+					current = pExpression.pop();
+				}
 			}
 
 			// L'algo SHUNTING YARD classique commence ici
@@ -150,13 +164,6 @@ public class Calculatrice {
 				operationStack.push(current);
 			}
 
-			// si le token est une parenthèse ouvrante
-			if (L_BRACKETS.contains(current)) {
-
-				// on la met sur le stack d'opérations
-				operationStack.push(current);
-			}
-
 			// si c'est une parenthèse fermante
 			if (R_BRACKETS.contains(current)) {
 
@@ -175,7 +182,9 @@ public class Calculatrice {
 
 		// lorsqu'il n'y a plus de token dans notre expression
 		// tant que le stack d'opération n'est pas vide
-		while (!operationStack.isEmpty()) {
+		while (!operationStack.isEmpty())
+
+		{
 			// on pop les opérateurs et les ajoutes à la file NPR
 			npr.add(operationStack.pop());
 		}
