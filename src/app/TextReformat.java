@@ -26,10 +26,13 @@ public class TextReformat {
 			cleanUp = cleanUp.replaceAll("--", "+");
 			cleanUp = cleanUp.replaceAll("\\+-", "-");
 			cleanUp = cleanUp.replaceAll("-\\+", "-");
+			//on retire les espaces vides
+			cleanUp = cleanUp.replaceAll(" ", "");
 			// la virugule mal aimée par java est aussi nettoyée
+			// j'assume ici qu'aucun séparateur de miliers,
+			// autre que des espaces, n'est utilisé
 			cleanUp = cleanUp.replaceAll(",", "\\.");
 		}
-
 		return cleanUp;
 	}
 

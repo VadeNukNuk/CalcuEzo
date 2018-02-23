@@ -20,13 +20,15 @@ public class CasTest {
 		Calculatrice.analyzeInput("2^8");// 256
 		Calculatrice.analyzeInput("2^8*5-1");// 1279
 
+		// test perso de mon handling des int negatif
+		Calculatrice.analyzeInput("-2+(14--5)+-24");// -7
+
 		//Cas dont l'implémentation restait à faire
 		// lireInput("sqrt(4)");// 2
 
 		Calculatrice.analyzeInput("1/0");// erreur
 
-		// test perso de mon handling des int negatif
-		Calculatrice.analyzeInput("-2+(14--5)+-24");// -7
+
 	}
 
 }
